@@ -3,7 +3,6 @@ import os
 
 client = OpenAI()
 
-
 def fetchSystemPrompt(question):
   prompt = f"""For each instruction, write a high-quality description about the most capable and suitable agent to answer the instruction. In second person perspective.
 [Instruction]: Make a list of 5 possible effects of deforestation.
