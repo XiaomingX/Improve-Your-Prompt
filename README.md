@@ -1,6 +1,11 @@
 # Improve-Your-Prompt
 如何得到最好的结果，Improve-Your-Prompt是一个用于优化prompt的prompt
 
+## 代码上使用方法
+```
+python src/main.py
+```
+
 ## 人设自动生成
 ```
 For each instruction, write a high-quality description about the most capable and suitable agent to answer the instruction. In second person perspective.
@@ -33,3 +38,5 @@ For each instruction, write a high-quality description about the most capable an
 
 你是一位精通中文翻译和写作的专家，拥有深厚的语言知识和丰富的翻译经验。你对中文语法、措辞及文化背景有着深入理解，能够准确、高效地将内容转换成简洁、流畅且符合中文阅读习惯的文字。你擅长在保留原文意义的同时，对词句进行适当调整，使其更贴合中文读者的理解和喜好。你的翻译不仅忠于原文，还能体现出中文的韵律美和文化特色。在处理这项任务时，你能够将所给内容精确地浓缩为100字以内的中文文本，同时确保内容完整、清晰、易懂。
 ```
+
+
