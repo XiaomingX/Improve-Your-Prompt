@@ -1,59 +1,43 @@
 from openai import OpenAI
 import os
 
-# 初始化OpenAI客户端
 client = OpenAI()
 
-def generate_system_prompt(question: str) -> str:
-    """
-    根据输入的问题生成系统提示信息，以指导AI提供合适的答案。
-    该函数返回一个描述用户提问所需知识领域的详细信息。
-    """
-    prompt = f"""For each instruction, write a high-quality description about the most capable and suitable agent to answer the instruction. In second person perspective.
+
+def fetchSystemPrompt(question):
+  prompt = f"""For each instruction, write a high-quality description about the most capable and suitable agent to answer the instruction. In second person perspective.
 [Instruction]: Make a list of 5 possible effects of deforestation.
-[Agent Description]: You are an environmental scientist with a specialization in the study of ecosystems and their interactions with human activities. You have extensive knowledge about the effects of deforestation on the environment, including the impact on biodiversity, climate change, soil quality, water resources, and human health. Your work has been widely recognized and has contributed to the development of policies and regulations aimed at promoting sustainable forest management practices. You are equipped with the latest research findings, and you can provide a detailed and comprehensive list of the possible effects of deforestation, including but not limited to the loss of habitat for countless species, increased greenhouse gas emissions, reduced water quality and quantity, soil erosion, and the emergence of diseases. Your expertise and insights are highly valuable in understanding the complex interactions between human actions and the environment.
+[Agent Description]: You are an environmental scientist with a specialization in the study of ecosystems and their interactions with human activities. You have extensive knowledge about the effects of deforestation on the environment,including the impact on biodiversity, climate change, soil quality, water resources, and human health. Your work has been widely recognized and has contributed to the development of policies and regulations aimed at promoting sustainable forest management practices. You are equipped with the latest research findings, and you can provide a detailed and comprehensive list of the possible effects of deforestation, including but not limited to the loss of habitat for countless species, increased greenhouse gas emissions, reduced water quality and quantity, soil erosion, and the emergence of diseases. Your expertise and insights are highly valuable in understanding the complex interactions between human actions and the environment.
 [Instruction]: Identify a descriptive phrase for an eclipse.
 [Agent Description]: You are an astronomer with a deep understanding of celestial events and phenomena. Your vast knowledge and experience make you an expert in describing the unique and captivating features of an eclipse. You have witnessed and studied many eclipses throughout your career, and you have a keen eye for detail and nuance. Your descriptive phrase for an eclipse would be vivid, poetic, and scientifically accurate. You can capture the awe-inspiring beauty of the celestial event while also explaining the science behind it. You can draw on your deep knowledge of astronomy, including the movement of the sun, moon, and earth, to create a phrase that accurately and elegantly captures the essence of an eclipse. Your descriptive phrase will help others appreciate the wonder of this natural phenomenon.
-[Instruction]: Identify the parts of speech in this sentence: "The dog barked at the postman".
+[Instruction]: Identify the parts of speech in this sentence: \"The dog barked at the postman\".
 [Agent Description]: You are a linguist, well-versed in the study of language and its structures. You have a keen eye for identifying the parts of speech in a sentence and can easily recognize the function of each word in the sentence. You are equipped with a good understanding of grammar rules and can differentiate between nouns, verbs, adjectives, adverbs, pronouns, prepositions, and conjunctions. You can quickly and accurately identify the parts of speech in the sentence "The dog barked at the postman" and explain the role of each word in the sentence. Your expertise in language and grammar is highly valuable in analyzing and understanding the nuances of communication.
 [Instruction]: {question}
 [Agent Description]: """
-    return prompt
-
-def get_answer(question: str) -> str:
-    """
-    调用OpenAI接口来生成答案，结合问题与系统提示信息。
-    返回生成的答案内容。
-    """
-    # 获取为该问题生成的系统提示
-    system_prompt = generate_system_prompt(question)
-
-    # 使用生成的系统提示和用户提问获取答案
-    completion = client.chat.completions.create(
+  completion = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": question}
+        {"role": "user", "content": prompt}
         ]
-    )
-    
-    # 返回AI生成的答案
-    return completion.choices[0].message.content.strip()
+  )
+  return(completion.choices[0].message.content.replace("[Agent Description]: ","").strip())
+
+def get_answer(question):
+  systemPrompt = fetchSystemPrompt(question)
+  completion = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+        {"role": "system", "content": systemPrompt},
+        {"role": "user", "content": question}
+        ]
+  )
+  return(completion.choices[0].message.content)
+  
 
 def main():
-    """
-    主函数，负责设置API密钥并调用`get_answer`函数获取答案。
-    """
-    # 设置OpenAI的API密钥
-    os.environ["OPENAI_API_KEY"] = "sk-你的API密钥"
+  os.environ["OPENAI_API_KEY"] = "sk-"
+  
+  print(get_answer("什么是爱情?"))
 
-    # 获取问题的答案
-    question = "什么是爱情?"
-    answer = get_answer(question)
-
-    # 打印答案
-    print(f"问题: {question}\n答案: {answer}")
-
-# 运行主函数
 if __name__ == "__main__":
-    main()
+  main()
