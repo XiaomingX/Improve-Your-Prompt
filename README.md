@@ -16,8 +16,6 @@
 # macOS/Linux
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Windows
-powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
 ### 安装项目依赖

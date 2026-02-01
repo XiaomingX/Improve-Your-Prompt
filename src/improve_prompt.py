@@ -1,3 +1,7 @@
+# Improve Your Prompt
+# This script uses OpenAI's GPT-4o to improve user prompts by generating detailed agent descriptions.
+# Ensure you have the OPENAI_API_KEY environment variable set.
+
 from openai import OpenAI
 import os
 
@@ -14,7 +18,7 @@ def fetchSystemPrompt(question):
 [Instruction]: {question}
 [Agent Description]: """
   completion = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4o",
         messages=[
         {"role": "user", "content": prompt}
         ]
@@ -24,7 +28,7 @@ def fetchSystemPrompt(question):
 def get_answer(question):
   systemPrompt = fetchSystemPrompt(question)
   completion = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4o",
         messages=[
         {"role": "system", "content": systemPrompt},
         {"role": "user", "content": question}
@@ -34,8 +38,12 @@ def get_answer(question):
   
 
 def main():
-  os.environ["OPENAI_API_KEY"] = "sk-"
+  # Ensure OPENAI_API_KEY is set in your environment
+  # os.environ["OPENAI_API_KEY"] = "sk-..." 
   
+  if not os.environ.get("OPENAI_API_KEY"):
+      print("Warning: OPENAI_API_KEY not set in environment.")
+
   print(get_answer("什么是爱情?"))
 
 if __name__ == "__main__":
