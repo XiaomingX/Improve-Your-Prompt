@@ -1,0 +1,16 @@
+[project]
+name = "improve-your-prompt"
+version = "0.1.0"
+description = "A tool for optimizing prompts using meta-prompting techniques"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "openai",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = []

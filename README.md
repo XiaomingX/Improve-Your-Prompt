@@ -6,8 +6,35 @@
 
 如何得到最好的结果，Improve-Your-Prompt是一个用于优化prompt的prompt
 
-## 代码上使用方法
+## 安装依赖
+
+本项目使用 [uv](https://github.com/astral-sh/uv) 进行依赖管理，要求 Python 3.11+。
+
+### 安装 uv
+
+```bash
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
+
+### 安装项目依赖
+
+```bash
+uv sync
+```
+
+## 代码上使用方法
+
+```bash
+# 使用 uv 运行
+uv run python src/main.py
+
+# 或者激活虚拟环境后运行
+source .venv/bin/activate  # macOS/Linux
+# 或 .venv\Scripts\activate  # Windows
 python src/main.py
 ```
 
